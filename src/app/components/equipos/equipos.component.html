@@ -1,23 +1,27 @@
-<h3>{{Titulo}} <small>{{TituloAccionBM[AccionBM]}}</small></h3>
+<h3>{{Titulo}} <small>{{TituloAccionABM[AccionABM]}}</small></h3>
 <div>
   <div class= "container">
-  <button type="button" class="btn btn-primary" (click)="Alta()" *ngIf="AccionBM == 'L'">
+  <button type="button" class="btn btn-primary" (click)="Alta()" *ngIf="AccionABM == 'L'">
             <span class="fas fa-plus"> </span> 
             Agregar
   </button>
   </div>
-  <table class="table table-bordered table-striped" *ngIf="AccionBM == 'L'">
+  <br>
+  <div class= "container">
+  <table class="table table-bordered table-striped" *ngIf="AccionABM == 'L'">
     <thead>
       <tr>
         <th class="text-center">EquipoNombre</th>
         <th class="text-center">EquipoRanking</th>
+        <th class="text-center">IdEquipo</th>
+        <th class="text-center">Acciones</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let item of Items">
-        <td>{{item.CantidadEmpleados}}</td>
-        <td>{{item.FechaFundacion | date:'dd/MM/yyyy'}}</td>
-        <td>{{item.RazonSocial | uppercase}}</td>
+        <td>{{item.EquipoNombre | uppercase}}</td>
+        <td>{{item.EquipoRanking}}</td>
+        <td>{{item.IdEquipo}}</td>
         <td class="text-center text-nowrap">
           <button type="button" class = "btn btn-sm btn-outline-primary" title="Editar" (click)="Editar(item)">
             <span class="fas fa-pencil-alt"></span>
@@ -33,36 +37,27 @@
 </div>
 
 <!-- Registro en Alta,Modificacion y Consulta -->
-<form name="FormRegEmp" [formGroup]='FormRegEmp' *ngIf="AccionBM != 'L'" class="bg-light">
+<form name="FormRegEq" [formGroup]='FormRegEq' *ngIf="AccionABM != 'L'" class="bg-light">
 
 	<fieldset>
-		<!--campo cantidadempleados-->
-		<div class="form-group row">
-			<label class="col-form-label col-sm-2 col-sm-offset-2" for="Nombre">Cantidad de Empleados <span
-                    class="text-danger">*</span></label>
-			<div class="col-sm-6">
-				<input type="text" class="form-control" formControlName="CantidadEmpleados"/>
-			</div>
-		</div>
-
-<!--campo fechaFundacion-->
-		<div class="form-group row">
-			<label class="col-form-label col-sm-2 col-sm-offset-2">Fecha de fundacion <span
-                    class="text-danger">*</span></label>
-			<div class="col-sm-6">
-				<input class="form-control"
-                           name="FechaFundacion" formControlName="FechaFundacion" />
-			</div>
-		</div>
 		
-    <!--campo razonSocial-->
+    <!--campo EquipoNombre-->
 		<div class="form-group row">
-			<label class="col-form-label col-sm-2 col-sm-offset-2" for="RazonSocial">
-                Razón Social <span class="text-danger">*</span>
+			<label class="col-form-label col-sm-2 col-sm-offset-2" for="EquipoNombre">
+              Equipo Nombre <span class="text-danger">*</span>
             </label>
             <div class="col-sm-6">
 				<input class="form-control"
-                           name="RazonSocial" formControlName="RazonSocial" />
+                           name="EquipoNombre" formControlName="EquipoNombre" />
+			</div>
+		</div>
+
+    <!--campo EquipoRanking-->
+		<div class="form-group row">
+			<label class="col-form-label col-sm-2 col-sm-offset-2" for="Nombre">EquipoRanking <span
+                    class="text-danger">*</span></label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" formControlName="EquipoRanking"/>
 			</div>
 		</div>
 	</fieldset>

@@ -41,7 +41,7 @@ import { EquiposService } from './services/equipos.service';
       { path: 'inicio', component: InicioComponent },
       { path: 'articulos', component: ArticulosComponent },
       { path: 'articulosfamilias', component: ArticulosFamiliasComponent },
-      {path: '/equipos', component: EquiposComponent}
+      {path: 'equipos', component: EquiposComponent}
     ]),
     NgbPaginationModule,
     NgbModalModule,
@@ -49,8 +49,7 @@ import { EquiposService } from './services/equipos.service';
   entryComponents: [ModalDialogComponent],
   providers: [
      {provide: APP_BASE_HREF, useValue : '/' },
-    { provide: HTTP_INTERCEPTORS, useClass: MyInterceptor, multi: true  },
-    {provide: EquiposService}
+    { provide: HTTP_INTERCEPTORS, useClass: MyInterceptor, multi: true, provider: [EquiposService] }
   ],
   bootstrap: [AppComponent]
 })
