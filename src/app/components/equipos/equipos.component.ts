@@ -71,10 +71,10 @@ export class EquiposComponent implements OnInit {
      if (this.FormRegEq.invalid) {
       return;
     }
-    //hacemos una copia de los datos del formulario, para modificar la fecha y luego enviarlo al servidor
+    //hacemos una copia de los datos del formulario
     const itemCopy = { ...this.FormRegEq.value };
     // agregar post
-    if (itemCopy.IdEmpresa == 0 || itemCopy.IdEmpresa == null) {
+    if (itemCopy.IdEquipo == 0 || itemCopy.IdEquipo == null) {
       this.equiposService.post(itemCopy).subscribe((res: any) =>{
         this.Volver();
         this.modalDialogService.Alert('Registro agregado correctamente');
@@ -92,5 +92,37 @@ export class EquiposComponent implements OnInit {
   // Volver desde Agregar/Modificar
   Volver() {
     this.AccionABM = "L";
+  }
+
+   // comienza la modificacion, luego la confirma con el metodo Grabar
+  Editar(Dto) {
+    this.submitted = false;
+    this.FormRegEq.markAsPristine();
+    this.FormRegEq.markAsUntouched();
+    this.BuscarPorId(Dto, "M");
+  }
+    // representa la baja 
+  Eliminar(Dto) {
+   this.modalDialogService.Confirm(
+      "Esta seguro de eliminar este registro?",
+      undefined,
+      undefined,
+      undefined,
+      () =>
+        this.equiposService  
+          .delete(Dto.IdEquipo)
+          .subscribe((res: any) => 
+            this.Buscar()
+          ),
+      this.modalDialogService.Alert("Registro eliminado correctamente"),
+    );
+    
+  }
+// Buscar segun los filtros, establecidos en FormReg
+  Buscar() {
+    this.equiposService
+      .get()
+      .subscribe((res: any) => {
+      });
   }
 }
