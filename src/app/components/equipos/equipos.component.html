@@ -1,0 +1,83 @@
+<h3>{{Titulo}} <small>{{TituloAccionBM[AccionBM]}}</small></h3>
+<div>
+  <div class= "container">
+  <button type="button" class="btn btn-primary" (click)="Alta()" *ngIf="AccionBM == 'L'">
+            <span class="fas fa-plus"> </span> 
+            Agregar
+  </button>
+  </div>
+  <table class="table table-bordered table-striped" *ngIf="AccionBM == 'L'">
+    <thead>
+      <tr>
+        <th class="text-center">EquipoNombre</th>
+        <th class="text-center">EquipoRanking</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of Items">
+        <td>{{item.CantidadEmpleados}}</td>
+        <td>{{item.FechaFundacion | date:'dd/MM/yyyy'}}</td>
+        <td>{{item.RazonSocial | uppercase}}</td>
+        <td class="text-center text-nowrap">
+          <button type="button" class = "btn btn-sm btn-outline-primary" title="Editar" (click)="Editar(item)">
+            <span class="fas fa-pencil-alt"></span>
+          </button> 
+        	<button type="button" class="btn btn-sm btn-outline-danger"
+                    title="Eliminar" (click)="Eliminar(item)">
+                    <span class="fas fa-times"></span>
+                </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Registro en Alta,Modificacion y Consulta -->
+<form name="FormRegEmp" [formGroup]='FormRegEmp' *ngIf="AccionBM != 'L'" class="bg-light">
+
+	<fieldset>
+		<!--campo cantidadempleados-->
+		<div class="form-group row">
+			<label class="col-form-label col-sm-2 col-sm-offset-2" for="Nombre">Cantidad de Empleados <span
+                    class="text-danger">*</span></label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control" formControlName="CantidadEmpleados"/>
+			</div>
+		</div>
+
+<!--campo fechaFundacion-->
+		<div class="form-group row">
+			<label class="col-form-label col-sm-2 col-sm-offset-2">Fecha de fundacion <span
+                    class="text-danger">*</span></label>
+			<div class="col-sm-6">
+				<input class="form-control"
+                           name="FechaFundacion" formControlName="FechaFundacion" />
+			</div>
+		</div>
+		
+    <!--campo razonSocial-->
+		<div class="form-group row">
+			<label class="col-form-label col-sm-2 col-sm-offset-2" for="RazonSocial">
+                Razón Social <span class="text-danger">*</span>
+            </label>
+            <div class="col-sm-6">
+				<input class="form-control"
+                           name="RazonSocial" formControlName="RazonSocial" />
+			</div>
+		</div>
+	</fieldset>
+      <!-- Botones Grabar, Cancelar/Volver' -->
+    <div class="row justify-content-center">
+        <button type="button" class="btn btn-primary" (click)="Grabar()">
+            <span class="fas fa-check"></span> Grabar
+        </button>
+        &nbsp;
+        <button type="button" class="btn btn-warning" (click)="Volver()">
+            <span class="fas fa-undo"></span> Volver/Cancelar
+        </button>
+    </div>
+     <!--texto: Revisar los datos ingresados...-->
+	<div id="divMsjFormRegistro" *ngIf="submitted && FormRegEmp.invalid" class="row alert alert-danger">
+		<span class="fas fa-exclamation-sign"></span>{{Mensajes['RD']}}
+	</div>
+</form>
