@@ -3,6 +3,7 @@ import {Equipo} from '../../models/equipo';
 import {EquiposService} from '../../services/equipos.service';
 import { ReactiveFormsModule } from "@angular/forms";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ModalDialogService } from "../../services/modal-dialog.service";
 
 
 @Component({
@@ -27,7 +28,8 @@ export class EquiposComponent implements OnInit {
   };
   FormRegEq: FormGroup;
   constructor( public formbuilder: FormBuilder,
-    private equiposService: EquiposService) {
+    private equiposService: EquiposService,
+    private modalDialogService: ModalDialogService) {
    }
 
   ngOnInit() {
@@ -61,5 +63,34 @@ export class EquiposComponent implements OnInit {
       this.FormRegEq.patchValue(res);
       this.AccionABM = AccionABM;
     });
+  }
+
+  Grabar() {
+    this.submitted = true;
+    // verificar que los validadores esten OK
+     if (this.FormRegEq.invalid) {
+      return;
+    }
+    //hacemos una copia de los datos del formulario, para modificar la fecha y luego enviarlo al servidor
+    const itemCopy = { ...this.FormRegEq.value };
+    // agregar post
+    if (itemCopy.IdEmpresa == 0 || itemCopy.IdEmpresa == null) {
+      this.equiposService.post(itemCopy).subscribe((res: any) =>{
+        this.Volver();
+        this.modalDialogService.Alert('Registro agregado correctamente');
+      });
+    } else {
+      // modificar put
+      this.equiposService
+        .put(itemCopy.IdEquipo, itemCopy)
+        .subscribe((res: any) => {
+          this.Volver();
+          this.modalDialogService.Alert('Registro modificado correctamente.');
+        });
+    }
+  }
+  // Volver desde Agregar/Modificar
+  Volver() {
+    this.AccionABM = "L";
   }
 }
