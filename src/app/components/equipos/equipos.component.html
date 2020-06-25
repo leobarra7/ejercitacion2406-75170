@@ -41,25 +41,52 @@
 
 	<fieldset>
 		
-    <!--campo EquipoNombre-->
+        <!--campo EquipoNombre-->
 		<div class="form-group row">
 			<label class="col-form-label col-sm-2 col-sm-offset-2" for="EquipoNombre">
               Equipo Nombre <span class="text-danger">*</span>
             </label>
             <div class="col-sm-6">
 				<input class="form-control"
-                           name="EquipoNombre" formControlName="EquipoNombre" />
+          name="EquipoNombre" formControlName="EquipoNombre"
+          [ngClass]="{'is-invalid': (FormRegEq.controls.EquipoNombre.touched || submitted)
+           && FormRegEq.controls.EquipoNombre.errors}" />
+
+        <span class="text-danger" *ngIf="(FormRegEq.controls.EquipoNombre.touched || submitted) 
+                        && FormRegEq.controls.EquipoNombre.errors?.required">
+                    Dato requerido.
+        </span>
+                <span class="text-danger" *ngIf="(FormRegEq.controls.EquipoNombre.touched || submitted) 
+                       && (FormRegEq.controls.EquipoNombre.errors?.minlength || FormRegEq.controls.EquipoNombre.errors?.maxlength) ">
+                    Dato texto, 4 a 10 caracteres.
+                </span>
 			</div>
 		</div>
 
     <!--campo EquipoRanking-->
 		<div class="form-group row">
-			<label class="col-form-label col-sm-2 col-sm-offset-2" for="Nombre">EquipoRanking <span
+			<label class="col-form-label col-sm-2 col-sm-offset-2" for="EquipoRanking">EquipoRanking <span
                     class="text-danger">*</span></label>
 			<div class="col-sm-6">
-				<input type="text" class="form-control" formControlName="EquipoRanking"/>
+				<input type="text" class="form-control" formControlName="EquipoRanking"
+        [ngClass]="{'is-invalid': (FormRegEq.controls.EquipoRanking.touched || submitted)
+           && FormRegEq.controls.EquipoRanking.errors}"/>
+           <span class="text-danger" *ngIf="(FormRegEq.controls.EquipoRanking.touched || submitted) 
+                        && FormRegEq.controls.EquipoRanking.errors?.required">
+                    Dato requerido.
+        </span>
+                <span class="text-danger" *ngIf="(FormRegEq.controls.EquipoRanking.touched || submitted) 
+                       && (FormRegEq.controls.EquipoRanking.errors?.min || FormRegEq.controls.EquipoRanking.errors?.max) ">
+                    Dato texto, 0 a 999.
+                </span>
+                <span class="text-danger" *ngIf="(FormRegEq.controls.EquipoRanking.touched || submitted) 
+                       && FormRegEq.controls.EquipoRanking.errors?.pattern ">
+                    Dato numerico
+                </span>
 			</div>
+      
 		</div>
+
 	</fieldset>
       <!-- Botones Grabar, Cancelar/Volver' -->
     <div class="row justify-content-center">

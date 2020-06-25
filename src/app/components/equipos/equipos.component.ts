@@ -35,12 +35,11 @@ export class EquiposComponent implements OnInit {
   ngOnInit() {
     this.GetEquipos();
     this.FormRegEq = this.formbuilder.group({
-      EquipoNombre: [null],
-      EquipoRanking: [null, [Validators.required, Validators.pattern("[0-9]{1,7}")]],
+      EquipoNombre: ["", Validators.required, Validators.minLength(4), Validators.maxLength(10)],
+      EquipoRanking: [null, [Validators.required, Validators.max(999), Validators.min(0), Validators.pattern("[0-9]{1,3}")]],
       IdEquipo: [0]
     });
   }
-
   GetEquipos(){
     this.equiposService.get()
     .subscribe((res:Equipo[]) => {
